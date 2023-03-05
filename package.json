@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/Shodhan1018Bz/BlogWebsite#readme",
   "dependencies": {
-    "express": "^4.18.2"
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "mongoose": "^7.0.0"
   }
 }
