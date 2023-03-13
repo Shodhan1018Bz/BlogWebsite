@@ -1,7 +1,8 @@
 const express=require("express")
-const User=require("../model/userModel")
+// const User=require("../model/userModel")
+const {User} =require("../model/blogs");
 const {OAuth2Client, UserRefreshClient} = require('google-auth-library');
-
+const jwt=require("jsonwebtoken")
 const SECRET_KEY="MyKey";
 const CLIENT_ID = "497231389779-dlf46tk6chkjll1h239hr60sq71vqbcf.apps.googleusercontent.com";
 const {verify}=require("jsonwebtoken")
@@ -32,15 +33,25 @@ async function login(req,res,next){
                 return new Error;
             }
             if(!existing){
-                const user=new User({
+                try{
+                 existing=new User({
                     name:userData.name,
                     email:userData.email,
-                    image:userData.picture
+                    image:userData.picture,
                 });
-                await user.save();
+                await existing.save();
+                }
+                catch(err){
+                    console.log(err);
+                }
+
             }
-            console.log(user);
-            res.json({meassage:"User successFullly Logged in"});
+            console.log(existing);
+            const token=jwt.sign({id:existing._id},SECRET_KEY,{
+                expiresIn:"50000000s"
+            })
+            res.cookie("jwt",token,{httpOnly:true});
+            res.json({message:"User successFully Logged in",token:token});
         }
     })
 }
