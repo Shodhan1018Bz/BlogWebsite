@@ -2,11 +2,11 @@ const mongoose=require("mongoose");
 const {Blog,User}=require("../model/blogs");
 const jwt=require("jsonwebtoken");
 const SECRET_KEY="MyKey";
-
+const ObjectId = require('mongoose').Types.ObjectId;
 const allBlogs = async (req,res)=>{
     try{
-        console.log(req.cookies);
-    const blogs = await Blog.find({});
+    console.log(req.cookies);
+    const blogs = await Blog.find({}).populate("author");
     console.log(blogs);
     res.status(201).json({blogs:blogs});
     }
@@ -16,9 +16,7 @@ const allBlogs = async (req,res)=>{
     
 }
 
-const deleteBlog = async (req,res)=>{
-    console.log(req);
-}
+
 
 const myBlogs = async (req,res)=>{
     const token = req.headers.token;
@@ -44,4 +42,21 @@ const myBlogs = async (req,res)=>{
     
 }
 
-module.exports={allBlogs,myBlogs};
+const deleteBlog = async (req,res)=>{
+    // const token= req.body.headers.token;
+     const blogId=req.params.id;
+     console.log(blogId)
+    
+     try{
+        const blogs= await Blog.findByIdAndDelete({_id:blogId})
+        
+        console.log(blogs);
+     }
+     catch(error){
+        console.log(error)
+     }
+    res.json({meassage:"akjgsdhuv"})
+    
+}
+
+module.exports={allBlogs,myBlogs,deleteBlog};

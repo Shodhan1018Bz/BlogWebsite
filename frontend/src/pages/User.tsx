@@ -3,8 +3,10 @@ import axios from "axios"
 import { UserContext } from "../App";
 import { useNavigate } from 'react-router-dom';
 import NavBar from "./homepage";
+import {Image} from "@mantine/core"
 export default function User(){
-   const [message,setMessage]=useState();
+   const [name,setName]=useState();
+   const [userPic,setUserPic]=useState("");
    const navigate = useNavigate();
    const user=useContext(UserContext);
    async function fetchUser(){
@@ -12,8 +14,10 @@ export default function User(){
          headers:{token:localStorage.getItem("token")}
       })
       .then(res=>{
-         console.log(res.data.message);
-         setMessage(res.data.message)
+         console.log(res.data);
+         setName(res.data.user.name);
+         setUserPic(res.data.image)
+
       });
    }
    if(user&& user.login==0){
@@ -23,7 +27,7 @@ export default function User(){
       const email=user&&user.userEmail;
       fetchUser();
    },[])
-   if(!message){
+   if(!name){
       return(
          <h1>Loading..</h1>
       )
@@ -33,7 +37,10 @@ export default function User(){
    return(
       <div>
          <NavBar/>
-         <h1>{message}</h1>
+         <div style={{height:"100px",width:"100px"}}>
+         <Image  src="https://lh3.googleusercontent.com/a/AGNmyxbeicmlpQkDhhxyovcUMQuFwrfAghrsUYpFQzI=s96-c" alt=""/>
+         </div>
+         <h1>{name}</h1>
       </div>
       
    )

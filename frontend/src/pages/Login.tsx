@@ -13,10 +13,7 @@ function LoginWithGoogle(props:any){
     const navigate = useNavigate();
 
     console.log(user)
-    if(user && user.login==1){
-        navigate("/");
-        return <h1>logged In</h1>;
-    }
+    
     return (
         <div>
         <GoogleOAuthProvider clientId={CLIENT_ID}>

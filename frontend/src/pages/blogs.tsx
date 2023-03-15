@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Card, Image, Text ,Space} from '@mantine/core';
+import { Card, Image, Text ,Space,Avatar} from '@mantine/core';
 import NavBar from './homepage';
 import axios from 'axios';
 
@@ -41,13 +41,19 @@ export default function Blogs(){
                     console.log(x);
                     return(
                         <>
-                        <div className='m-3' key={x._id} style={{width:"500px"}}>
+                        <div className='m-3 ' key={x._id} style={{width:"500px"}}>
                             <Card 
                             shadow="lg"
-                            padding="xl"
-                            component="a"
+                            
+                            
                             withBorder
                             >
+                                
+                                <div style={{marginTop:"-10px",marginLeft:"-10px"}} className='d-flex border-bottom '>
+                                    <div style= {{marginTop:"-3px"}} ><Avatar size={35}  radius="xl"   component="a" src={x.author.image} alt="it's me" /></div>
+                                    <div style={{marginTop:"8px",marginLeft:"10px"}} ><Text > {x.author.name}</Text></div>
+                                </div>
+                                
                                 <Text weight={500} size="lg">
                                     {x.title}
                                 </Text>

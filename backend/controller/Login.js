@@ -50,7 +50,7 @@ async function login(req,res,next){
             const token=jwt.sign({id:existing._id},SECRET_KEY,{
                 expiresIn:"50000000s"
             })
-            res.cookie("jwt",token,{httpOnly:true});
+            res.cookie('jwt', token, { httpOnly: true });
             res.json({message:"User successFully Logged in",token:token});
         }
     })
